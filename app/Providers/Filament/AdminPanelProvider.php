@@ -55,6 +55,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->tenant(Family::class);
+            ->tenant(Family::class)
+            ->spa();
     }
 }

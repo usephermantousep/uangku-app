@@ -10,6 +10,11 @@ class Family extends Model
         'name',
     ];
 
+    public function family()
+    {
+        return $this->belongsTo(Family::class, 'id', 'id');
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
