@@ -47,7 +47,8 @@ class UserResource extends Resource
                             ->placeholder('Enter your password')
                             ->dehydrated(fn($state) => ! blank($state)),
                         Select::make('family_id')
-                            ->relationship('family', 'name', fn($query) => $query->where('families.id', Filament::getTenant()->id))
+                            ->relationship('family', 'name', fn($query) =>
+                            $query->whereIn('families.id', [Filament::getTenant()->id]))
                             ->label('Family')
                             ->searchable()
                             ->placeholder('Select a family')
@@ -74,6 +75,8 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([]);
     }
