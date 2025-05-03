@@ -12,6 +12,8 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Resources\Resource;
@@ -45,12 +47,23 @@ class TransactionResource extends Resource
                                 DbMapping::getSelectIsIncome()
                             )
                             ->default(0)
+                            ->live()
                             ->required()
-                            ->native(false),
+                            ->native(false)
+                            ->afterStateUpdated(
+                                fn(Set $set) => $set('category_id', null)
+                            ),
                         Select::make('category_id')
-                            ->relationship('category', 'name')
+                            ->relationship(
+                                'category',
+                                'name',
+                                fn(Builder $query, Get $get) =>
+                                $query->where('categories.is_income', $get('is_income'))
+                            )
                             ->native(false)
                             ->preload()
+                            ->reactive()
+                            ->searchable()
                             ->required(),
                         Select::make('mode_of_payment_id')
                             ->relationship(
@@ -61,7 +74,8 @@ class TransactionResource extends Resource
                             )
                             ->native(false)
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->searchable(),
                         DatePicker::make('transaction_date')
                             ->required()
                             ->native(false)
@@ -70,9 +84,11 @@ class TransactionResource extends Resource
                             ->default(now()),
                         TextInput::make('amount')
                             ->prefix('Rp')
-                            ->mask(RawJs::make("\$money(\$input, ',', '.')")),
+                            ->mask(RawJs::make("\$money(\$input, ',', '.')"))
+                            ->placeholder('Enter Amount'),
                         TextInput::make('description')
                             ->required()
+                            ->placeholder('Description for detail transaction')
                             ->maxLength(255),
                     ])
                     ->columns(3),

@@ -40,11 +40,16 @@ class LaterTransactionResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('category_id')
-                            ->relationship('category', 'name')
+                            ->relationship(
+                                'category',
+                                'name',
+                                modifyQueryUsing: fn(Builder $query) => $query->where('categories.is_income', 0)
+                            )
                             ->native(false)
                             ->preload()
                             ->placeholder('Select Category')
-                            ->required(),
+                            ->required()
+                            ->searchable(),
                         Select::make('mode_of_payment_id')
                             ->relationship(
                                 'modeOfPayment',
@@ -52,6 +57,7 @@ class LaterTransactionResource extends Resource
                                 fn(Builder $query) =>
                                 $query->where('mode_of_payments.is_transaction', 0)
                             )
+                            ->searchable()
                             ->native(false)
                             ->preload()
                             ->placeholder('Select Mode Of Payment')
@@ -87,6 +93,7 @@ class LaterTransactionResource extends Resource
                             ->helperText('Remark for paid or not')
                             ->default(false),
                         DatePicker::make('paid_at')
+                            ->placeholder('Input Paid Date')
                             ->date()
                             ->format('Y-m-d')
                             ->native(false)

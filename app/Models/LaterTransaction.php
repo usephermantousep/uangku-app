@@ -30,6 +30,7 @@ class LaterTransaction extends Model
             if ($user) {
                 $query->whereBelongsTo($user->family);
             }
+            $query->orderBy('transaction_date', 'desc');
         });
     }
 
