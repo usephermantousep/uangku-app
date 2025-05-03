@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->boolean('is_income')->default(false);
             $table->timestamps();
+            $table->unique(['family_id', 'name', 'is_income'], 'unique_family_category');
         });
     }
 

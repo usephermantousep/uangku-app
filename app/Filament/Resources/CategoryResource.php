@@ -6,17 +6,21 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use App\Util\DbMapping;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Unique;
 
 class CategoryResource extends Resource
 {
@@ -34,7 +38,16 @@ class CategoryResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->label('Category Name')
-                            ->placeholder('Enter category name'),
+                            ->placeholder('Enter category name')
+                            ->unique(
+                                ignoreRecord: true,
+                                modifyRuleUsing: fn(Unique $rule, Get $get)
+                                => $rule->where(
+                                    'family_id',
+                                    Filament::getTenant()->id
+                                )
+                                    ->where('is_income', $get('is_income'))
+                            ),
                         Select::make('is_income')
                             ->label('Type')
                             ->options(
@@ -63,7 +76,9 @@ class CategoryResource extends Resource
                     ->state(fn(Category $record) => DbMapping::getSelectIsIncome()[$record->is_income])
             ])
             ->filters([
-                //
+                SelectFilter::make('is_income')
+                    ->label('Type')
+                    ->options(DbMapping::getSelectIsIncome())
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

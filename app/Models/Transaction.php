@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,6 +19,16 @@ class Transaction extends Model
         'created_by',
         'updated_by'
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('family', function (Builder $query) {
+            $user = auth()->user();
+            if ($user) {
+                $query->whereBelongsTo($user->family);
+            }
+        });
+    }
 
     public function family(): BelongsTo
     {

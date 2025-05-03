@@ -17,10 +17,11 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->onDelete('cascade');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('is_transaction')->default(true);
             $table->timestamps();
+            $table->unique(['family_id', 'name', 'is_transaction'], 'unique_family_mode_of_payment');
         });
     }
 

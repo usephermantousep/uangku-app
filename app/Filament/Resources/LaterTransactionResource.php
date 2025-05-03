@@ -19,6 +19,8 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -44,7 +46,12 @@ class LaterTransactionResource extends Resource
                             ->placeholder('Select Category')
                             ->required(),
                         Select::make('mode_of_payment_id')
-                            ->relationship('modeOfPayment', 'name')
+                            ->relationship(
+                                'modeOfPayment',
+                                'name',
+                                fn(Builder $query) =>
+                                $query->where('mode_of_payments.is_transaction', 0)
+                            )
                             ->native(false)
                             ->preload()
                             ->placeholder('Select Mode Of Payment')
@@ -112,10 +119,64 @@ class LaterTransactionResource extends Resource
                     'Rp ' . number_format($state, thousands_separator: '.'))
                     ->sortable(),
                 IconColumn::make('is_paid')
+                    ->label('Status')
                     ->boolean()
             ])
             ->filters([
-                //
+                SelectFilter::make('is_paid')
+                    ->label('Status')
+                    ->preload()
+                    ->searchable()
+                    ->options([
+                        '1' => 'Paid',
+                        '0' => 'Unpaid'
+                    ])
+                    ->native(false)
+                    ->placeholder('Select type'),
+                SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->preload()
+                    ->native(false)
+                    ->searchable()
+                    ->relationship(
+                        'category',
+                        'name',
+                        fn(Builder $query) => $query->where('categories.is_income', 0)
+                    )
+                    ->placeholder('Select category'),
+                SelectFilter::make('mode_of_payment_id')
+                    ->label('Mode of Payment')
+                    ->preload()
+                    ->native(false)
+                    ->searchable()
+                    ->relationship('modeOfPayment', 'name', fn(Builder $query) =>
+                    $query->where('mode_of_payments.is_transaction', 0))
+                    ->placeholder('Select mode of payment'),
+                Filter::make('transaction_date')
+                    ->form([
+                        DatePicker::make('transaction_from')
+                            ->placeholder('From')
+                            ->format('Y-m-d')
+                            ->native(false),
+                        DatePicker::make('transaction_to')
+                            ->placeholder('To')
+                            ->format('Y-m-d')
+                            ->native(false),
+                    ])
+                    ->query(
+                        fn(Builder $query, array $data): Builder
+                        => $query
+                            ->when(
+                                $data['transaction_from'],
+                                fn(Builder $query, $date): Builder =>
+                                $query->whereDate('transaction_date', '>=', $date),
+                            )
+                            ->when(
+                                $data['transaction_to'],
+                                fn(Builder $query, $date): Builder =>
+                                $query->whereDate('transaction_date', '<=', $date),
+                            )
+                    )
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
