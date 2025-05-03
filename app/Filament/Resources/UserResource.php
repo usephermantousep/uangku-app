@@ -48,7 +48,7 @@ class UserResource extends Resource
                             ->dehydrated(fn($state) => ! blank($state)),
                         Select::make('family_id')
                             ->relationship('family', 'name', fn($query) =>
-                            $query->whereIn('families.id', [Filament::getTenant()->id]))
+                            $query->where('families.id', Filament::getTenant()->id))
                             ->label('Family')
                             ->searchable()
                             ->placeholder('Select a family')

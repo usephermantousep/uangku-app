@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Observers\ModeOfPaymentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy([ModeOfPaymentObserver::class])]
 class ModeOfPayment extends Model
 {
     protected $fillable = [

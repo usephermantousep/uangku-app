@@ -10,11 +10,6 @@ class Family extends Model
         'name',
     ];
 
-    public function family()
-    {
-        return $this->belongsTo(Family::class, 'id', 'id');
-    }
-
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -24,7 +19,7 @@ class Family extends Model
     {
         return $this->hasMany(Category::class);
     }
-    public function modesOfPayment()
+    public function modeOfPayments()
     {
         return $this->hasMany(ModeOfPayment::class);
     }
@@ -38,4 +33,5 @@ class Family extends Model
     {
         return $this->hasMany(LaterTransaction::class);
     }
+
 }

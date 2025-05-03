@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\ModeOfPaymentResource\Pages;
+use App\Filament\Resources\ModeOfPaymentResource\RelationManagers;
+use App\Models\ModeOfPayment;
+use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class ModeOfPaymentResource extends Resource
+{
+    protected static ?string $model = ModeOfPayment::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->label('Name')
+                            ->placeholder('Enter the name of the mode of payment'),
+                        Checkbox::make('is_transaction')
+                            ->label('Is Transaction')
+                            ->helperText('Check if this mode of payment is a transaction type,
+                            uncheck if it is a later transaction type')
+                            ->default(true),
+                        TextInput::make('description')
+                            ->label('Description')
+                            ->placeholder('Enter a description for the mode of payment')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2)
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
+                TextColumn::make('is_transaction')
+                    ->label('Type')
+                    ->state(fn(ModeOfPayment $record) => $record->is_transaction ? 'Transaction' : 'Later Transaction')
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListModeOfPayments::route('/'),
+            'create' => Pages\CreateModeOfPayment::route('/create'),
+            'view' => Pages\ViewModeOfPayment::route('/{record}'),
+            'edit' => Pages\EditModeOfPayment::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['family']);
+    }
+}
