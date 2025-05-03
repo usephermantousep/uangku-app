@@ -17,4 +17,11 @@ class EditLaterTransaction extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $user_id = auth()->user()->id;
+        $data['amount'] = str_replace('.', '', $data['amount']);
+        $data['updated_by'] = $user_id;
+    }
 }

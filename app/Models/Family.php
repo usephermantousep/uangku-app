@@ -31,7 +31,7 @@ class Family extends Model
         return $this->belongsToMany(User::class, 'family_user');
     }
 
-    public function laterTransaction(): HasMany
+    public function laterTransactions(): HasMany
     {
         return $this->hasMany(LaterTransaction::class);
     }
