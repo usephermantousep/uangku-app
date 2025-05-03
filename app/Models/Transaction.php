@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,9 +26,8 @@ class Transaction extends Model
         static::addGlobalScope('family', function (Builder $query) {
             $user = auth()->user();
             if ($user) {
-                $query->whereBelongsTo($user->family);
+                $query->where('family_id', Filament::getTenant()->id);
             }
-            $query->orderBy('transaction_date', 'desc');
         });
     }
 
