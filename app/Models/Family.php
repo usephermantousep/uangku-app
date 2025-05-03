@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Family extends Model
 {
@@ -10,28 +12,27 @@ class Family extends Model
         'name',
     ];
 
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function categories()
+    public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
     }
-    public function modeOfPayments()
+    public function modeOfPayments(): HasMany
     {
         return $this->hasMany(ModeOfPayment::class);
     }
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'family_user');
     }
 
-    public function laterTransaction()
+    public function laterTransaction(): HasMany
     {
         return $this->hasMany(LaterTransaction::class);
     }
-
 }

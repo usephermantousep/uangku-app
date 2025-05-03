@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,10 +18,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->onDelete('cascade');
-            $table->foreignId('user_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('cascade');
             $table->foreignId('category_id')
                 ->constrained()
                 ->onDelete('cascade');
@@ -34,7 +31,16 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->date('transaction_date')
                 ->default(now());
-            $table->enum('type', ['income', 'expense']);
+            $table->boolean(('is_income'))
+                ->default(false);
+            $table->foreignIdFor(User::class, 'created_by')
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignIdFor(User::class, 'updated_by')
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

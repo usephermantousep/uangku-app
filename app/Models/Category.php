@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -13,17 +15,17 @@ class Category extends Model
         'is_income'
     ];
 
-    public function family()
+    public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
     }
 
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function laterTransaction()
+    public function laterTransaction(): HasMany
     {
         return $this->hasMany(LaterTransaction::class);
     }

@@ -15,8 +15,8 @@ class DbMapping
     public static function getIsTransactionOrLater(): array
     {
         return [
-            0 => 'Transaction',
-            1 => 'Later',
+            0 => 'Later',
+            1 => 'Transaction',
         ];
     }
 }

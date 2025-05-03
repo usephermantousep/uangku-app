@@ -2,25 +2,25 @@
 
 namespace Database\Seeders;
 
-use App\Models\ModeOfPayment;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ModeOfPaymentSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $modeOfPayments = [
+        $categories = [
             [
-                'name' => 'Cash',
+                'name' => 'Makan & Minum',
                 'family_id' => 1,
-                'is_transaction' => 1,
+                'is_income' => 0,
             ]
         ];
 
-        ModeOfPayment::insert($modeOfPayments);
+        Category::insert($categories);
     }
 }

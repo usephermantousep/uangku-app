@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Observers\ModeOfPaymentObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[ObservedBy([ModeOfPaymentObserver::class])]
 class ModeOfPayment extends Model
 {
     protected $fillable = [
@@ -16,17 +15,17 @@ class ModeOfPayment extends Model
         'is_transaction'
     ];
 
-    public function family()
+    public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
     }
 
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function laterTransactions()
+    public function laterTransactions(): HasMany
     {
         return $this->hasMany(LaterTransaction::class);
     }

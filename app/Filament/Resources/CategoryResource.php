@@ -7,7 +7,6 @@ use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use App\Util\DbMapping;
 use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

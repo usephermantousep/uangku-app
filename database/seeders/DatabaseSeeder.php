@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             FamilySeeder::class,
             UserSeeder::class,
             FamilyUserSeeder::class,
+            CategorySeeder::class,
+            ModeOfPaymentSeeder::class,
         ]);
     }
 }
