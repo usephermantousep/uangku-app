@@ -5,14 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ModeOfPaymentResource\Pages;
 use App\Filament\Resources\ModeOfPaymentResource\RelationManagers;
 use App\Models\ModeOfPayment;
-use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
+use App\Util\DbMapping;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,11 +33,15 @@ class ModeOfPaymentResource extends Resource
                             ->required()
                             ->label('Name')
                             ->placeholder('Enter the name of the mode of payment'),
-                        Checkbox::make('is_transaction')
-                            ->label('Is Transaction')
-                            ->helperText('Check if this mode of payment is a transaction type,
-                            uncheck if it is a later transaction type')
-                            ->default(true),
+                        Select::make('is_transaction')
+                            ->label('Type')
+                            ->options(
+                                DbMapping::getIsTransactionOrLater()
+                            )
+                            ->default(0)
+                            ->required()
+                            ->native(false)
+                            ->placeholder('Select type'),
                         TextInput::make('description')
                             ->label('Description')
                             ->placeholder('Enter a description for the mode of payment')
@@ -57,7 +60,7 @@ class ModeOfPaymentResource extends Resource
                     ->searchable(),
                 TextColumn::make('is_transaction')
                     ->label('Type')
-                    ->state(fn(ModeOfPayment $record) => $record->is_transaction ? 'Transaction' : 'Later Transaction')
+                    ->state(fn(ModeOfPayment $record) => DbMapping::getIsTransactionOrLater()[$record->is_transaction])
             ])
             ->filters([
                 //
