@@ -21,7 +21,6 @@ return [
     "description" => "Deskripsi",
     "created_by" => "Dibuat Oleh",
     "updated_by" => "Dirubah Oleh",
-    "enter_amount" => "Masukkan Jumlah",
     "enter_description" => "Deskripsi untuk detail :attribute",
     "transaction_from" => "Transaksi Dari",
     "transaction_to" => "Transaksi Sampai",
@@ -30,8 +29,9 @@ return [
     "is_paid" => "Terbayar",
     "paid_at" => "Bayar Pada",
     "remark_is_paid" => "Penanda terbayar atau belum",
-    "enter_paid_at" => "Masukkan Terbayaar pada",
+    "enter_paid_at" => "Masukkan Terbayar pada",
     "name" => "Nama",
     "is_income" => "Apakah Pendapatan",
-    "enter_placeholder" => "Masukkan :attribute"
+    "enter_placeholder" => "Masukkan :attribute",
+    "user" => "Pengguna",
 ];

@@ -22,11 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Filament::registerNavigationGroups([
-            'Transactions' => NavigationGroup::make(fn() => 'Transactions'),
-            'Settings' => NavigationGroup::make(fn() => 'Settings'),
-        ]);
-
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->displayLocale('id')

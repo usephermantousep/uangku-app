@@ -26,7 +26,26 @@ class ModeOfPaymentResource extends Resource
     protected static ?string $model = ModeOfPayment::class;
 
     protected static ?string $navigationIcon = 'heroicon-c-credit-card';
-    protected static ?string $navigationGroup = 'Settings';
+
+    public static function getLabel(): ?string
+    {
+        return __('global.mode_of_payment');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('global.mode_of_payment');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('global.mode_of_payment');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('global.settings');
+    }
 
     public static function form(Form $form): Form
     {
@@ -36,8 +55,8 @@ class ModeOfPaymentResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required()
-                            ->label('Name')
-                            ->placeholder('Enter the name of the mode of payment')
+                            ->label(__('global.name'))
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.name')]))
                             ->unique(
                                 ignoreRecord: true,
                                 modifyRuleUsing: fn(Unique $rule, Get $get)
@@ -48,17 +67,16 @@ class ModeOfPaymentResource extends Resource
                                     ->where('is_transaction', $get('is_transaction'))
                             ),
                         Select::make('is_transaction')
-                            ->label('Type')
+                            ->label(__('global.type'))
                             ->options(
                                 DbMapping::getIsTransactionOrLater()
                             )
                             ->default(1)
                             ->required()
-                            ->native(false)
-                            ->placeholder('Select type'),
+                            ->native(false),
                         TextInput::make('description')
-                            ->label('Description')
-                            ->placeholder('Enter a description for the mode of payment')
+                            ->label(__('global.description'))
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.description')]))
                             ->columnSpanFull(),
                     ])
                     ->columns(2)
@@ -70,17 +88,16 @@ class ModeOfPaymentResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Name')
+                    ->label(__('global.name'))
                     ->searchable(),
                 TextColumn::make('is_transaction')
-                    ->label('Type')
+                    ->label(__('global.type'))
                     ->state(fn(ModeOfPayment $record) => DbMapping::getIsTransactionOrLater()[$record->is_transaction])
             ])
             ->filters([
                 SelectFilter::make('is_transaction')
-                    ->label('Type')
+                    ->label(__('global.type'))
                     ->options(DbMapping::getIsTransactionOrLater())
-                    ->placeholder('Select type')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

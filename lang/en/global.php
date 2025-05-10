@@ -21,7 +21,6 @@ return [
     "description" => "Description",
     "created_by" => "Created By",
     "updated_by" => "Updated By",
-    "enter_amount" => "Enter Amount",
     "enter_description" => "Description for detail :attribute",
     "transaction_from" => "Transaction From",
     "transaction_to" => "Transaction To",
@@ -33,4 +32,6 @@ return [
     "enter_paid_at" => "Enter Paid At",
     "name" => "Name",
     "is_income" => "Is Income",
+    "enter_placeholder" => "Enter :attribute",
+    "user" => "User",
 ];
