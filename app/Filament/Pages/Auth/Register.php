@@ -37,6 +37,7 @@ class Register extends BaseRegister
     protected function handleRegistration(array $data): Model
     {
         $user = $this->getUserModel()::create($data);
+        $user->assignRole("Head of Family");
         $family = Family::create([
             'name' => $data['family_name']
         ]);

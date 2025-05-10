@@ -12,12 +12,12 @@ class FamilyUserSeeder extends Seeder
      */
     public function run(): void
     {
-        $familyUsers = [
-            ['user_id' => 1, 'family_id' => 1],
-            ['user_id' => 2, 'family_id' => 1],
-            ['user_id' => 3, 'family_id' => 2],
-        ];
+        // $familyUsers = [
+        //     ['user_id' => 1, 'family_id' => 1],
+        //     ['user_id' => 2, 'family_id' => 1],
+        //     ['user_id' => 3, 'family_id' => 2],
+        // ];
 
-        DB::table('family_user')->insert($familyUsers);
+        // DB::table('family_user')->insert($familyUsers);
     }
 }

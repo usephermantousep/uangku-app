@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LaterTransactionResource\Pages;
 use App\Filament\Resources\LaterTransactionResource\RelationManagers;
 use App\Models\LaterTransaction;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -64,6 +65,7 @@ class LaterTransactionResource extends Resource
                                 'category',
                                 'name',
                                 modifyQueryUsing: fn(Builder $query) => $query->where('categories.is_income', 0)
+                                    ->where('family_id', Filament::getTenant()->id)
                             )
                             ->native(false)
                             ->preload()
@@ -76,6 +78,7 @@ class LaterTransactionResource extends Resource
                                 'name',
                                 fn(Builder $query) =>
                                 $query->where('mode_of_payments.is_transaction', 0)
+                                    ->where('family_id', Filament::getTenant()->id)
                             )
                             ->searchable()
                             ->native(false)

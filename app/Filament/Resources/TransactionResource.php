@@ -6,6 +6,7 @@ use App\Filament\Resources\TransactionResource\Pages;
 use App\Filament\Resources\TransactionResource\RelationManagers;
 use App\Models\Transaction;
 use App\Util\DbMapping;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
@@ -79,6 +80,7 @@ class TransactionResource extends Resource
                                 'name',
                                 fn(Builder $query, Get $get) =>
                                 $query->where('categories.is_income', $get('is_income'))
+                                    ->where('family_id', Filament::getTenant()->id)
                             )
                             ->native(false)
                             ->preload()
@@ -92,6 +94,7 @@ class TransactionResource extends Resource
                                 'name',
                                 fn(Builder $query) =>
                                 $query->where('mode_of_payments.is_transaction', 1)
+                                    ->where('family_id', Filament::getTenant()->id)
                             )
                             ->native(false)
                             ->preload()
