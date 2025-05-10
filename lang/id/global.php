@@ -25,4 +25,5 @@ return [
     "enter_description" => "Description for detail :attribute",
     "transaction_from" => "Transaksi Dari",
     "transaction_to" => "Transaksi Sampai",
+    "period" => "Periode ",
 ];

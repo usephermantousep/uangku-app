@@ -137,8 +137,7 @@ class TransactionResource extends Resource
             ->columns([
                 TextColumn::make('transaction_date')
                     ->label(__('global.transaction_date'))
-                    ->date()
-                    ->sortable(),
+                    ->date('d F Y'),
                 TextColumn::make('category.name')
                     ->label(__('global.category')),
                 TextColumn::make('modeOfPayment.name')
@@ -146,8 +145,7 @@ class TransactionResource extends Resource
                 TextColumn::make('amount')
                     ->formatStateUsing(fn(string $state): string =>
                     'Rp ' . number_format($state, thousands_separator: '.'))
-                    ->label(__('global.amount'))
-                    ->sortable(),
+                    ->label(__('global.amount')),
             ])
             ->filters([
                 SelectFilter::make('is_income')
@@ -224,5 +222,11 @@ class TransactionResource extends Resource
             'view' => Pages\ViewTransaction::route('/{record}'),
             'edit' => Pages\EditTransaction::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->orderBy('transaction_date', 'desc');
     }
 }

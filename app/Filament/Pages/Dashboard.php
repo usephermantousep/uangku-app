@@ -19,10 +19,12 @@ class Dashboard extends BaseDashboard
                 Section::make()
                     ->schema([
                         DatePicker::make('startDate')
-                            ->placeholder('Start Date')
+                            ->label(__('global.transaction_from'))
+                            ->placeholder(__('global.transaction_from'))
                             ->native(false),
                         DatePicker::make('endDate')
-                            ->placeholder('End Date')
+                            ->label(__('global.transaction_to'))
+                            ->placeholder(__('global.transaction_to'))
                             ->native(false),
                     ])
                     ->columns(3),

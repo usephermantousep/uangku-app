@@ -25,4 +25,5 @@ return [
     "enter_description" => "Description for detail :attribute",
     "transaction_from" => "Transaction From",
     "transaction_to" => "Transaction To",
+    "period" => "Period ",
 ];
