@@ -59,6 +59,7 @@ class LaterTransactionResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('category_id')
+                            ->label(__('global.category'))
                             ->relationship(
                                 'category',
                                 'name',
@@ -66,10 +67,10 @@ class LaterTransactionResource extends Resource
                             )
                             ->native(false)
                             ->preload()
-                            ->placeholder('Select Category')
                             ->required()
                             ->searchable(),
                         Select::make('mode_of_payment_id')
+                            ->label(__('global.mode_of_payment'))
                             ->relationship(
                                 'modeOfPayment',
                                 'name',
@@ -79,28 +80,33 @@ class LaterTransactionResource extends Resource
                             ->searchable()
                             ->native(false)
                             ->preload()
-                            ->placeholder('Select Mode Of Payment')
                             ->required(),
                         DatePicker::make('transaction_date')
+                            ->label(__('global.transaction_date'))
                             ->required()
                             ->native(false)
                             ->date()
                             ->format('Y-m-d')
                             ->default(now()),
                         TextInput::make('amount')
-                            ->placeholder('Input Amount')
+                            ->label(__('global.amount'))
+                            ->placeholder(__('global.enter_amount'))
                             ->prefix('Rp')
+                            ->required()
                             ->mask(RawJs::make("\$money(\$input, ',', '.')")),
                         TextInput::make('periods')
+                            ->label(__('global.period'))
                             ->numeric()
                             ->required()
                             ->default(1),
                         TextInput::make('number_period')
+                            ->label(__('global.number_period'))
                             ->numeric()
                             ->required()
                             ->default(1),
                         TextInput::make('description')
-                            ->placeholder('description for detail transaction')
+                            ->label(__('global.description'))
+                            ->placeholder(__('global.enter_description', ['attribute' => __('global.transactions')]))
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
@@ -109,10 +115,12 @@ class LaterTransactionResource extends Resource
                 Section::make('Payment')
                     ->schema([
                         Checkbox::make('is_paid')
-                            ->helperText('Remark for paid or not')
+                            ->label(__('global.is_paid'))
+                            ->helperText(__('global.remark_is_paid'))
                             ->default(false),
                         DatePicker::make('paid_at')
-                            ->placeholder('Input Paid Date')
+                            ->label(__('global.paid_at'))
+                            ->placeholder(__('global.enter_paid_at'))
                             ->date()
                             ->format('Y-m-d')
                             ->native(false)
@@ -120,8 +128,10 @@ class LaterTransactionResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('created_by')
+                            ->label(__('global.created_by'))
                             ->relationship('createdBy', 'name'),
                         Select::make('updated_by')
+                            ->label(__('global.updated_by'))
                             ->relationship('updatedBy', 'name'),
                     ])
                     ->columns(2)
@@ -134,16 +144,16 @@ class LaterTransactionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('transaction_date')
-                    ->date()
-                    ->sortable(),
+                    ->label(__('global.transaction_date'))
+                    ->date('d F Y'),
                 TextColumn::make('category.name')
-                    ->label('Category'),
+                    ->label(__('global.category')),
                 TextColumn::make('modeOfPayment.name')
-                    ->label('Mode of Payment'),
+                    ->label(__('global.mode_of_payment')),
                 TextColumn::make('amount')
+                    ->label(__('global.amount'))
                     ->formatStateUsing(fn(string $state): string =>
-                    'Rp ' . number_format($state, thousands_separator: '.'))
-                    ->sortable(),
+                    'Rp ' . number_format($state, thousands_separator: '.')),
                 IconColumn::make('is_paid')
                     ->label('Status')
                     ->boolean()
@@ -160,7 +170,7 @@ class LaterTransactionResource extends Resource
                     ->native(false)
                     ->placeholder('Select type'),
                 SelectFilter::make('category_id')
-                    ->label('Category')
+                    ->label(__('global.category'))
                     ->preload()
                     ->native(false)
                     ->searchable()
@@ -168,24 +178,22 @@ class LaterTransactionResource extends Resource
                         'category',
                         'name',
                         fn(Builder $query) => $query->where('categories.is_income', 0)
-                    )
-                    ->placeholder('Select category'),
+                    ),
                 SelectFilter::make('mode_of_payment_id')
-                    ->label('Mode of Payment')
+                    ->label(__('global.mode_of_payment'))
                     ->preload()
                     ->native(false)
                     ->searchable()
                     ->relationship('modeOfPayment', 'name', fn(Builder $query) =>
-                    $query->where('mode_of_payments.is_transaction', 0))
-                    ->placeholder('Select mode of payment'),
+                    $query->where('mode_of_payments.is_transaction', 0)),
                 Filter::make('transaction_date')
                     ->form([
                         DatePicker::make('transaction_from')
-                            ->placeholder('From')
+                            ->label(__('global.transaction_from'))
                             ->format('Y-m-d')
                             ->native(false),
                         DatePicker::make('transaction_to')
-                            ->placeholder('To')
+                            ->label(__('global.transaction_to'))
                             ->format('Y-m-d')
                             ->native(false),
                     ])

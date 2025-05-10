@@ -10,6 +10,8 @@ class CreateLaterTransaction extends CreateRecord
 {
     protected static string $resource = LaterTransactionResource::class;
 
+    protected static bool $canCreateAnother = false;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $user_id = auth()->user()->id;

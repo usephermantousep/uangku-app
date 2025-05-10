@@ -26,4 +26,9 @@ return [
     "transaction_from" => "Transaction From",
     "transaction_to" => "Transaction To",
     "period" => "Period ",
+    "number_period" => "Number Period",
+    "is_paid" => "Is Paid",
+    "paid_at" => "Paid At",
+    "remark_is_paid" => "Remark for paid or not",
+    "enter_paid_at" => "Enter Paid At",
 ];

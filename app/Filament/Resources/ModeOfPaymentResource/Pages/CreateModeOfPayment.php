@@ -9,4 +9,6 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateModeOfPayment extends CreateRecord
 {
     protected static string $resource = ModeOfPaymentResource::class;
+
+    protected static bool $canCreateAnother = false;
 }
