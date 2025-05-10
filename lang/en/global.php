@@ -34,4 +34,5 @@ return [
     "is_income" => "Is Income",
     "enter_placeholder" => "Enter :attribute",
     "user" => "User",
+    "family" => "Family",
 ];

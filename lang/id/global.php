@@ -34,4 +34,5 @@ return [
     "is_income" => "Apakah Pendapatan",
     "enter_placeholder" => "Masukkan :attribute",
     "user" => "Pengguna",
+    "family" => "Keluarga",
 ];

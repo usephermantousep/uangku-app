@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\FamilyRelationManager;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -52,27 +53,19 @@ class UserResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required()
-                            ->label('Name')
-                            ->placeholder('Enter your name'),
+                            ->label(__('global.name'))
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.name')])),
                         TextInput::make('email')
                             ->required()
                             ->label('Email')
-                            ->placeholder('Enter your email')
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => 'Email']))
                             ->email(),
                         TextInput::make('password')
                             ->type('password')
                             ->required()
                             ->label('Password')
-                            ->placeholder('Enter your password')
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => 'Password']))
                             ->dehydrated(fn($state) => ! blank($state)),
-                        Select::make('family_id')
-                            ->relationship('family', 'name', fn($query) =>
-                            $query->where('families.id', Filament::getTenant()->id))
-                            ->label('Family')
-                            ->searchable()
-                            ->placeholder('Select a family')
-                            ->required()
-                            ->preload()
                     ])
                     ->columns(2)
             ]);
@@ -83,9 +76,10 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('global.name'))
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email Address')
+                    ->label('Email')
                     ->searchable(),
             ])
             ->filters([
@@ -103,7 +97,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            FamilyRelationManager::class,
         ];
     }
 
