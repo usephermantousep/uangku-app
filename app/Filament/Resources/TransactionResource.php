@@ -109,7 +109,7 @@ class TransactionResource extends Resource
                             ->prefix('Rp')
                             ->required()
                             ->mask(RawJs::make("\$money(\$input, ',', '.')"))
-                            ->placeholder(__('global.enter_amount')),
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.amount')])),
                         TextInput::make('description')
                             ->label(__('global.description'))
                             ->required()

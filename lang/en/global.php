@@ -31,4 +31,6 @@ return [
     "paid_at" => "Paid At",
     "remark_is_paid" => "Remark for paid or not",
     "enter_paid_at" => "Enter Paid At",
+    "name" => "Name",
+    "is_income" => "Is Income",
 ];

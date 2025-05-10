@@ -27,7 +27,26 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Settings';
+
+    public static function getLabel(): ?string
+    {
+        return __('global.category');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('global.category');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('global.category');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('global.settings');
+    }
 
     public static function form(Form $form): Form
     {
@@ -37,8 +56,8 @@ class CategoryResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required()
-                            ->label('Category Name')
-                            ->placeholder('Enter category name')
+                            ->label(__('global.name'))
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.name')]))
                             ->unique(
                                 ignoreRecord: true,
                                 modifyRuleUsing: fn(Unique $rule, Get $get)
@@ -49,16 +68,16 @@ class CategoryResource extends Resource
                                     ->where('is_income', $get('is_income'))
                             ),
                         Select::make('is_income')
-                            ->label('Type')
+                            ->label(__('global.type'))
                             ->options(
-                                DbMapping::getSelectIsIncome()
+                                DbMapping::getSelectIsIncome(app()->getLocale())
                             )
                             ->default(0)
                             ->required()
                             ->native(false),
                         TextInput::make('description')
-                            ->label('Description')
-                            ->placeholder('Enter description')
+                            ->label(__('global.description'))
+                            ->placeholder(__('global.enter_description', ['attribute' => __('global.category')]))
                             ->columnSpanFull(),
                     ])->columns(2)
             ]);
@@ -66,19 +85,21 @@ class CategoryResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $locale = app()->getLocale();
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('global.name'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('is_income')
-                    ->label('Type')
-                    ->state(fn(Category $record) => DbMapping::getSelectIsIncome()[$record->is_income])
+                    ->label(__('global.type'))
+                    ->state(fn(Category $record) => DbMapping::getSelectIsIncome($locale)[$record->is_income])
             ])
             ->filters([
                 SelectFilter::make('is_income')
-                    ->label('Type')
-                    ->options(DbMapping::getSelectIsIncome())
+                    ->label(__('global.type'))
+                    ->options(DbMapping::getSelectIsIncome($locale))
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

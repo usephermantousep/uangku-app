@@ -31,4 +31,7 @@ return [
     "paid_at" => "Bayar Pada",
     "remark_is_paid" => "Penanda terbayar atau belum",
     "enter_paid_at" => "Masukkan Terbayaar pada",
+    "name" => "Nama",
+    "is_income" => "Apakah Pendapatan",
+    "enter_placeholder" => "Masukkan :attribute"
 ];

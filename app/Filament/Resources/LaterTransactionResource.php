@@ -90,7 +90,7 @@ class LaterTransactionResource extends Resource
                             ->default(now()),
                         TextInput::make('amount')
                             ->label(__('global.amount'))
-                            ->placeholder(__('global.enter_amount'))
+                            ->placeholder(__('global.enter_placeholder', ['attribute' => __('global.amount')]))
                             ->prefix('Rp')
                             ->required()
                             ->mask(RawJs::make("\$money(\$input, ',', '.')")),
