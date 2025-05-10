@@ -2,7 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Register;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\EditFamilyProfile;
+use App\Filament\Pages\RegisterFamily;
 use App\Filament\Widgets\FamilyTotalStatsOverview;
 use App\Filament\Widgets\TopExpenseCategoryTable;
 use App\Filament\Widgets\TopIncomeCategoryTable;
@@ -11,6 +14,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -61,6 +65,12 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->tenant(Family::class)
+            ->tenantRegistration(RegisterFamily::class)
+            ->tenantProfile(EditFamilyProfile::class)
+            ->tenantMenuItems([
+                'register' => MenuItem::make()->label('New Family'),
+            ])
+            ->registration(Register::class)
             ->spa();
     }
 }
