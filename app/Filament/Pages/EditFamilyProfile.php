@@ -16,7 +16,7 @@ class EditFamilyProfile extends EditTenantProfile
     }
     public static function getLabel(): string
     {
-        return 'Edit your family';
+        return __('global.edit_yout_family');
     }
 
     public function form(Form $form): Form
@@ -25,7 +25,7 @@ class EditFamilyProfile extends EditTenantProfile
             ->schema([
                 TextInput::make('name')
                     ->unique(Family::class)
-                    ->label('Name')
+                    ->label(__('global.family_name'))
                     ->required()
                     ->maxLength(255),
             ]);

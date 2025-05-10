@@ -8,6 +8,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,11 @@ class TopIncomeCategoryTable extends BaseWidget
     use InteractsWithPageFilters;
 
     protected static ?string $pollingInterval = null;
+
+    protected function getTableHeading(): string | Htmlable | null
+    {
+        return __('global.top_in_cat_table');
+    }
 
     public function getTableRecordKey(Model $record): string
     {

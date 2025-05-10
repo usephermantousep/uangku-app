@@ -31,9 +31,28 @@ class TransactionResource extends Resource
     protected static ?string $model = Transaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-banknotes';
-    protected static ?string $navigationGroup = 'Transactions';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getLabel(): ?string
+    {
+        return __('global.transactions');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('global.transactions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('global.transactions');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('global.transactions');
+    }
 
     public static function form(Form $form): Form
     {
@@ -42,9 +61,9 @@ class TransactionResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('is_income')
-                            ->label('Type')
+                            ->label(__('global.type'))
                             ->options(
-                                DbMapping::getSelectIsIncome()
+                                DbMapping::getSelectIsIncome(app()->getLocale())
                             )
                             ->default(0)
                             ->live()
@@ -54,6 +73,7 @@ class TransactionResource extends Resource
                                 fn(Set $set) => $set('category_id', null)
                             ),
                         Select::make('category_id')
+                            ->label(__('global.category'))
                             ->relationship(
                                 'category',
                                 'name',
@@ -66,6 +86,7 @@ class TransactionResource extends Resource
                             ->searchable()
                             ->required(),
                         Select::make('mode_of_payment_id')
+                            ->label(__('global.mode_of_payment'))
                             ->relationship(
                                 'modeOfPayment',
                                 'name',
@@ -77,26 +98,32 @@ class TransactionResource extends Resource
                             ->required()
                             ->searchable(),
                         DatePicker::make('transaction_date')
+                            ->label(__('global.transaction_date'))
                             ->required()
                             ->native(false)
                             ->date()
                             ->format('Y-m-d')
                             ->default(now()),
                         TextInput::make('amount')
+                            ->label(__('global.amount'))
                             ->prefix('Rp')
                             ->mask(RawJs::make("\$money(\$input, ',', '.')"))
-                            ->placeholder('Enter Amount'),
+                            ->placeholder(__('global.enter_amount')),
                         TextInput::make('description')
+                            ->label(__('global.description'))
                             ->required()
-                            ->placeholder('Description for detail transaction')
+                            ->columnSpanFull()
+                            ->placeholder(__('global.enter_description', ['attribute' => __('global.transactions')]))
                             ->maxLength(255),
                     ])
                     ->columns(3),
                 Section::make()
                     ->schema([
                         Select::make('created_by')
+                            ->label(__('global.created_by'))
                             ->relationship('createdBy', 'name'),
                         Select::make('updated_by')
+                            ->label(__('global.updated_by'))
                             ->relationship('updatedBy', 'name'),
                     ])
                     ->columns(2)
@@ -109,27 +136,29 @@ class TransactionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('transaction_date')
+                    ->label(__('global.transaction_date'))
                     ->date()
                     ->sortable(),
                 TextColumn::make('category.name')
-                    ->label('Category'),
+                    ->label(__('global.category')),
                 TextColumn::make('modeOfPayment.name')
-                    ->label('Mode of Payment'),
+                    ->label(__('global.mode_of_payment')),
                 TextColumn::make('amount')
                     ->formatStateUsing(fn(string $state): string =>
                     'Rp ' . number_format($state, thousands_separator: '.'))
+                    ->label(__('global.amount'))
                     ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('is_income')
-                    ->label('Type')
+                    ->label(__('global.type'))
                     ->preload()
                     ->searchable()
-                    ->options(DbMapping::getSelectIsIncome())
+                    ->options(DbMapping::getSelectIsIncome(app()->getLocale()))
                     ->native(false)
                     ->placeholder('Select type'),
                 SelectFilter::make('category_id')
-                    ->label('Category')
+                    ->label(__('global.category'))
                     ->preload()
                     ->native(false)
                     ->searchable()
@@ -139,7 +168,7 @@ class TransactionResource extends Resource
                     )
                     ->placeholder('Select category'),
                 SelectFilter::make('mode_of_payment_id')
-                    ->label('Mode of Payment')
+                    ->label(__('global.mode_of_payment'))
                     ->preload()
                     ->native(false)
                     ->searchable()
@@ -149,11 +178,11 @@ class TransactionResource extends Resource
                 Filter::make('transaction_date')
                     ->form([
                         DatePicker::make('transaction_from')
-                            ->placeholder('From')
+                            ->label(__('global.transaction_from'))
                             ->format('Y-m-d')
                             ->native(false),
                         DatePicker::make('transaction_to')
-                            ->placeholder('To')
+                            ->label(__('global.transaction_to'))
                             ->format('Y-m-d')
                             ->native(false),
                     ])

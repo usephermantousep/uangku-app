@@ -4,11 +4,11 @@ namespace App\Util;
 
 class DbMapping
 {
-    public static function getSelectIsIncome(): array
+    public static function getSelectIsIncome($locale): array
     {
         return [
-            0 => 'Expense',
-            1 => 'Income',
+            0 => $locale == 'en' ? 'Expense' : "Pengeluaran",
+            1 => $locale == 'en' ? 'Income' : "Pendapatan",
         ];
     }
 

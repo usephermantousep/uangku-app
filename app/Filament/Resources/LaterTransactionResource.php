@@ -30,8 +30,27 @@ class LaterTransactionResource extends Resource
     protected static ?string $model = LaterTransaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-credit-card';
-    protected static ?string $navigationGroup = 'Transactions';
     protected static ?int $navigationSort = 1;
+
+    public static function getLabel(): ?string
+    {
+        return __('global.later_transaction');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('global.later_transaction');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('global.later_transaction');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('global.transactions');
+    }
 
     public static function form(Form $form): Form
     {

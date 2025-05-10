@@ -11,7 +11,7 @@ class RegisterFamily extends BaseRegisterTenant
 {
     public static function getLabel(): string
     {
-        return 'Register Family';
+        return __('global.register_family');
     }
 
     public function form(Form $form): Form
@@ -19,8 +19,8 @@ class RegisterFamily extends BaseRegisterTenant
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label(__('global.family_name'))
                     ->unique(Family::class)
-                    ->label('Name')
                     ->required()
                     ->maxLength(255),
             ]);

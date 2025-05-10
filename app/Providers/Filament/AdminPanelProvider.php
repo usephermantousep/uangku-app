@@ -15,6 +15,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -71,6 +72,10 @@ class AdminPanelProvider extends PanelProvider
                 'register' => MenuItem::make()->label('New Family'),
             ])
             ->registration(Register::class)
+            ->navigationGroups([
+                'Transactions' => NavigationGroup::make(fn() => __('global.transactions')),
+                'Settings' => NavigationGroup::make(fn() => __('global.settings')),
+            ])
             ->spa();
     }
 }

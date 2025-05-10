@@ -28,7 +28,10 @@ class Register extends BaseRegister
 
     protected function getFamilyField(): TextInput
     {
-        return TextInput::make('family_name')->required();
+        return TextInput::make('family_name')
+            ->label(__('global.family_name'))
+            ->maxLength(255)
+            ->required();
     }
 
     protected function handleRegistration(array $data): Model

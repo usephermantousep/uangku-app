@@ -1,0 +1,28 @@
+<?php
+
+return [
+    "family_name" => "Family Name",
+    "edit_yout_family" => "Edit Family",
+    "register_family" => "Register New Family",
+    "total_income" => "Total Income",
+    "total_expense" => "Total Expense",
+    "income_vs_expense" => "Income Vs Expense",
+    "total_later_transaction" => "Total Later Transaction",
+    "top_ex_cat_table" => "Total Expense Category",
+    "top_in_cat_table" => "Total Income Category",
+    "category" => "Category",
+    "settings" => "Settings",
+    "transactions" => "Transactions",
+    "later_transaction" => "Later Transaction",
+    "type" => "Type",
+    "mode_of_payment" => "Mode Of Payment",
+    "transaction_date" => "Transaction Date",
+    "amount" => "Amount",
+    "description" => "Description",
+    "created_by" => "Created By",
+    "updated_by" => "Updated By",
+    "enter_amount" => "Enter Amount",
+    "enter_description" => "Description for detail :attribute",
+    "transaction_from" => "Transaction From",
+    "transaction_to" => "Transaction To",
+];

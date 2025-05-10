@@ -35,23 +35,23 @@ class FamilyTotalStatsOverview extends BaseWidget
         $periods = "For periods ";
 
         return [
-            Stat::make('Total Income', 'Rp ' . number_format($totalIncome, thousands_separator: '.'))
+            Stat::make(__('global.total_income'), 'Rp ' . number_format($totalIncome, thousands_separator: '.'))
                 ->color('success')
                 ->description($periods .
                     $startDate->format($formatDate) . ' - ' . $endDate->format($formatDate))
                 ->icon('heroicon-o-arrow-trending-up'),
-            Stat::make('Total Expense', 'Rp ' . number_format($totalExpense, thousands_separator: '.'))
+            Stat::make(__('global.total_expense'), 'Rp ' . number_format($totalExpense, thousands_separator: '.'))
                 ->color('danger')
                 ->description($periods .
                     $startDate->format($formatDate) . ' - ' . $endDate->format($formatDate))
                 ->icon('heroicon-o-arrow-trending-down'),
-            Stat::make('Income Vs Expense', 'Rp ' .
+            Stat::make(__('global.income_vs_expense'), 'Rp ' .
                 number_format($totalIncome - $totalExpense, thousands_separator: '.'))
                 ->color('info')
                 ->description($periods .
                     $startDate->format($formatDate) . ' - ' . $endDate->format($formatDate))
                 ->icon('heroicon-o-chart-bar'),
-            Stat::make('Total Later Transaction', 'Rp ' .
+            Stat::make(__('global.total_later_transaction'), 'Rp ' .
                 number_format($totalLaterTransaction, thousands_separator: '.'))
                 ->color('warning')
                 ->description($periods .

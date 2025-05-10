@@ -1,0 +1,28 @@
+<?php
+
+return [
+    "family_name" => "Nama Keluarga",
+    "edit_yout_family" => "Ubah Keluarga",
+    "register_family" => "Daftar Keluarga Baru",
+    "total_income" => "Total Pendapatan",
+    "total_expense" => "Total Pengeluaran",
+    "income_vs_expense" => "Pendapatan Vs Pengeluaran",
+    "total_later_transaction" => "Total Transaksi Later",
+    "top_ex_cat_table" => "Total Pengeluaran Kategori",
+    "top_in_cat_table" => "Total Pendapatan Kategori",
+    "category" => "Kategori",
+    "settings" => "Pengaturan",
+    "transactions" => "Transaksi",
+    "later_transaction" => "Transaksi Later",
+    "type" => "Tipe",
+    "mode_of_payment" => "Mode Pembayaran",
+    "transaction_date" => "Tanggal Transaksi",
+    "amount" => "Jumlah",
+    "description" => "Deskripsi",
+    "created_by" => "Dibuat Oleh",
+    "updated_by" => "Dirubah Oleh",
+    "enter_amount" => "Masukkan Jumlah",
+    "enter_description" => "Description for detail :attribute",
+    "transaction_from" => "Transaksi Dari",
+    "transaction_to" => "Transaksi Sampai",
+];
