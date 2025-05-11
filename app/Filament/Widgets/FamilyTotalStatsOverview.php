@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\LaterTransaction;
 use App\Models\Transaction;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -23,11 +24,14 @@ class FamilyTotalStatsOverview extends BaseWidget
             \Illuminate\Support\Carbon::parse($filters['endDate']) :
             now()->endOfMonth();
         // Fetch transactions within the date range
-        $transactions = Transaction::whereBetween('transaction_date', [$startDate, $endDate])->get();
+        $transactions = Transaction::whereBetween('transaction_date', [$startDate, $endDate])
+            ->get(['is_income', 'amount']);
         // Calculate total income and expenses
         $totalIncome = $transactions->where('is_income', 1)->sum('amount');
         $totalExpense = $transactions->where('is_income', 0)->sum('amount');
-        $totalLaterTransaction = $transactions->whereBetween('transaction_date', [$startDate, $endDate])->sum('amount');
+        $totalLaterTransaction = LaterTransaction::whereBetween('transaction_date', [$startDate, $endDate])
+            ->get('amount')
+            ->sum('amount');
         // Define the date format
         $formatDate = 'd F Y';
         // Format the start and end dates according to the locale
