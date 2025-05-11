@@ -17,6 +17,7 @@ class Transaction extends Model
         'mode_of_payment_id',
         'transaction_date',
         'type',
+        'is_income',
         'created_by',
         'updated_by'
     ];
