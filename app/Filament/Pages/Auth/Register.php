@@ -2,7 +2,9 @@
 
 namespace App\Filament\Pages\Auth;
 
+use App\Models\Category;
 use App\Models\Family;
+use App\Models\ModeOfPayment;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Auth\Register as BaseRegister;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +44,8 @@ class Register extends BaseRegister
             'name' => $data['family_name']
         ]);
         $user->family()->attach($family->id);
+        Category::initNewFamily($family->id);
+        ModeOfPayment::initNewFamily($family->id);
 
         return $user;
     }
