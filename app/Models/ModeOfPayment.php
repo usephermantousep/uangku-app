@@ -41,4 +41,53 @@ class ModeOfPayment extends Model
     {
         return $this->hasMany(LaterTransaction::class);
     }
+
+    public static function initNewFamily($familyId): void
+    {
+        $modeOfPayments = [
+            [
+                'name' => 'Tunai',
+                'description' => 'Pembayaran langsung dengan uang tunai',
+                'family_id' => $familyId,
+                'is_transaction' => 1,
+            ],
+            [
+                'name' => 'Transfer Bank',
+                'description' => 'Pembayaran melalui rekening bank',
+                'family_id' => $familyId,
+                'is_transaction' => 1,
+            ],
+            [
+                'name' => 'E-Wallet (GoPay,OVO dll)',
+                'description' => 'Pembayaran melalui dompet digital',
+                'family_id' => $familyId,
+                'is_transaction' => 1,
+            ],
+            [
+                'name' => 'Kartu Kredit',
+                'description' => 'Pembayaran menggunakan kartu kredit',
+                'family_id' => $familyId,
+                'is_transaction' => 0,
+            ],
+            [
+                'name' => 'Kartu Debit',
+                'description' => 'Pembayaran menggunakan kartu debit',
+                'family_id' => $familyId,
+                'is_transaction' => 1,
+            ],
+            [
+                'name' => 'Pay Later',
+                'description' => 'Pembayaran menggunakan metode pay later',
+                'family_id' => $familyId,
+                'is_transaction' => 0,
+            ],
+            [
+                'name' => 'Virtual Account',
+                'description' => 'Pembayaran menggunakan virtual account',
+                'family_id' => $familyId,
+                'is_transaction' => 1,
+            ],
+        ];
+        self::insert($modeOfPayments);
+    }
 }

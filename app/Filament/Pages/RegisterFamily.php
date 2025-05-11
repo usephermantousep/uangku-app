@@ -2,7 +2,9 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Category;
 use App\Models\Family;
+use App\Models\ModeOfPayment;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant as BaseRegisterTenant;
@@ -31,6 +33,8 @@ class RegisterFamily extends BaseRegisterTenant
         $entity = parent::handleRegistration($data);
         $user = auth()->user();
         $user->family()->attach($entity->id);
+        Category::initNewFamily($entity->id);
+        ModeOfPayment::initNewFamily($entity->id);
 
         return $entity;
     }
