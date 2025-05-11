@@ -35,4 +35,5 @@ return [
     "enter_placeholder" => "Masukkan :attribute",
     "user" => "Pengguna",
     "family" => "Keluarga",
+    "new_family" => "Keluarga Baru"
 ];

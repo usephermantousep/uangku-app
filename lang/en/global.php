@@ -35,4 +35,5 @@ return [
     "enter_placeholder" => "Enter :attribute",
     "user" => "User",
     "family" => "Family",
+    "new_family" => "New Family"
 ];
