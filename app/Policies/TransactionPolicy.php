@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Transaction;
 use App\Models\User;
+use App\Util\PermissionUtil;
 use Illuminate\Auth\Access\Response;
 
 class TransactionPolicy
@@ -45,7 +46,7 @@ class TransactionPolicy
      */
     public function delete(User $user, Transaction $transaction): bool
     {
-        return $transaction->createdBy->id == $user->id;
+        return $transaction->createdBy->id == $user->id || $user->hasAnyRole(PermissionUtil::$adminAndHoF);
     }
 
     /**

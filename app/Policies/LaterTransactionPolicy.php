@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\LaterTransaction;
 use App\Models\User;
+use App\Util\PermissionUtil;
 use Illuminate\Auth\Access\Response;
 
 class LaterTransactionPolicy
@@ -45,7 +46,7 @@ class LaterTransactionPolicy
      */
     public function delete(User $user, LaterTransaction $laterTransaction): bool
     {
-        return $laterTransaction->createdBy->id == $user->id;
+        return $laterTransaction->createdBy->id == $user->id || $user->hasAnyRole(PermissionUtil::$adminAndHoF);
     }
 
     /**

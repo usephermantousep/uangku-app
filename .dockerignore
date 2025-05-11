@@ -1,0 +1,31 @@
+# Ignore the .git directory
+.git
+.gitignore
+
+# Ignore node_modules and vendor as they will be installed inside the container
+node_modules
+vendor
+
+# Ignore environment files (these should be handled securely via Docker secrets or environment variables)
+.env
+.env.*.backup
+
+# Ignore local IDE and editor settings
+.idea
+.vscode
+
+# Ignore OS and system files
+.DS_Store
+Thumbs.db
+
+# Ignore npm and yarn-related lock files (optional, depends on whether you're using these)
+npm-debug.log
+yarn-error.log
+
+# Ignore temporary files created during builds or file editing
+*.swp
+*.swo
+
+# Ignore Docker-related files if not needed
+docker-compose.override.yml
+.dockerignore

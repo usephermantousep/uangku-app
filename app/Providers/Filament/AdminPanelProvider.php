@@ -69,7 +69,7 @@ class AdminPanelProvider extends PanelProvider
             ->tenantRegistration(RegisterFamily::class)
             ->tenantProfile(EditFamilyProfile::class)
             ->tenantMenuItems([
-                'register' => MenuItem::make()->label('New Family'),
+                'register' => MenuItem::make()->label(__('global.new_family')),
             ])
             ->registration(Register::class)
             ->navigationGroups([
