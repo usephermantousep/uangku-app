@@ -25,4 +25,9 @@ class EditLaterTransaction extends EditRecord
         $data['updated_by'] = $user_id;
         return $data;
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('view', ['record' => $this->record]);
+    }
 }
