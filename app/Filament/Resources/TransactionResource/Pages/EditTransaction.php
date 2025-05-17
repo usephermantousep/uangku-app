@@ -23,5 +23,6 @@ class EditTransaction extends EditRecord
         $user_id = auth()->user()->id;
         $data['amount'] = str_replace('.', '', $data['amount']);
         $data['updated_by'] = $user_id;
+        return $data;
     }
 }
